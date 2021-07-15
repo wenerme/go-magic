@@ -1,5 +1,7 @@
 
-ci: cover
+ci:
+	-which apt-get && apt-get update -y && apt-get install -y libmagic-mgc || true
+	$(MAKE) cover
 
 fmt:
 	gofumpt -w `find . -type f -name '*.go' -not -path "./vendor/*"`

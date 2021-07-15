@@ -11,8 +11,8 @@ import (
 )
 
 func TestFile(t *testing.T) {
-	assert.NotEmpty(t, magic.GetDefaultDir())
 	log.Println("version", magic.Version(), "dir", magic.GetDefaultDir())
+	assert.NotEmpty(t, magic.GetDefaultDir())
 
 	mgc := magic.Open(magic.MAGIC_NONE)
 	defer mgc.Close()
