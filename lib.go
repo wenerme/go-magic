@@ -1,9 +1,9 @@
 package magic
 
 /*
-   #cgo LDFLAGS: -lmagic
-   #include <magic.h>
-   #include <stdlib.h>
+#cgo LDFLAGS: -lmagic
+#include <magic.h>
+#include <stdlib.h>
 
 static magic_t f(void* x) {
 	return (magic_t)x;
@@ -98,9 +98,13 @@ func (m Magic) Close() error {
 	return nil
 }
 
-func (m Magic) Error() string {
+func (m Magic) Error() error {
 	s := C.magic_error(magic(m))
-	return C.GoString(s)
+	str := C.GoString(s)
+	if str == "" {
+		return nil
+	}
+	return errors.New(str)
 }
 
 func magic(x Magic) C.magic_t {
@@ -155,11 +159,7 @@ func (m Magic) err(errno int) error {
 	if errno == 0 {
 		return nil
 	}
-	err := m.Error()
-	if err == "" {
-		return nil
-	}
-	return errors.New(err)
+	return m.Error()
 }
 
 func Version() int {

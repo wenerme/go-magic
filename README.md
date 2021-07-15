@@ -19,3 +19,10 @@
 [report-card]: https://goreportcard.com/report/github.com/wenerme/go-magic
 
 libmagic in golang
+
+## Alternative
+
+- go [net/http#DetectContentType](https://pkg.go.dev/net/http#DetectContentType)
+    - whatwg [mimesniff](https://mimesniff.spec.whatwg.org/)
+- pure go [h2non/filetype](https://github.com/h2non/filetype)
+- [adrian-thurston/ragel](https://github.com/adrian-thurston/ragel)

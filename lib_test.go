@@ -1,7 +1,7 @@
 package magic_test
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"testing"
 
@@ -11,13 +11,26 @@ import (
 )
 
 func TestFile(t *testing.T) {
-	fmt.Println("version", magic.Version())
+	assert.NotEmpty(t, magic.GetDefaultDir())
+	log.Println("version", magic.Version(), "dir", magic.GetDefaultDir())
 
 	mgc := magic.Open(magic.MAGIC_NONE)
 	defer mgc.Close()
-	fmt.Println(mgc.GetFlags())
+	log.Println("flags", mgc.GetFlags())
 	assert.NoError(t, mgc.Load(""))
-	fmt.Printf("file: %s - error %#v errno %v\n", mgc.File(os.Args[0]), mgc.Error(), mgc.Errno())
+
+	log.Printf("file: %s", mgc.File(os.Args[0]))
+	assert.Equal(t, 0, mgc.Errno())
+	assert.NoError(t, mgc.Error())
+
 	mgc.SetFlags(magic.MAGIC_MIME | magic.MAGIC_MIME_ENCODING)
-	fmt.Printf("file: %s - error %#v errno %v\n", mgc.File(os.Args[0]), mgc.Error(), mgc.Errno())
+	assert.Equal(t, "application/x-mach-binary; charset=binary", mgc.File(os.Args[0]))
+	assert.Equal(t, 0, mgc.Errno())
+	assert.NoError(t, mgc.Error())
+
+	mgc.SetFlags(magic.MAGIC_ERROR)
+	assert.Equal(t, "", mgc.File("./not-exists"))
+	assert.Equal(t, 2, mgc.Errno())
+	assert.EqualError(t, mgc.Error(), "cannot stat `./not-exists' (No such file or directory)")
+	log.Println("flags", mgc.GetFlags())
 }
