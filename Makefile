@@ -1,6 +1,6 @@
 
 ci:
-	-which apt-get && apt-get update -y && apt-get install -y libmagic-mgc || true
+	-which apt-get && sudo apt-get update -y && sudo apt-get install -y libmagic-mgc
 	$(MAKE) cover
 
 fmt:
