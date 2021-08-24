@@ -69,6 +69,7 @@ var locations = []string{
 	"/usr/share/misc/magic.mgc",
 	"/usr/share/file/magic.mgc",
 	"/usr/share/magic/magic.mgc",
+	"/usr/lib/file/magic.mgc",
 }
 
 // GetDefaultDir Find the real magic file location

@@ -11,7 +11,7 @@
 [report-card-img]: https://goreportcard.com/badge/github.com/wenerme/go-magic
 [report-card]: https://goreportcard.com/report/github.com/wenerme/go-magic
 
-libmagic in golang
+libmagic Golang binding.
 
 ## Alternative
 
