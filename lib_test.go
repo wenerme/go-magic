@@ -3,6 +3,7 @@ package magic_test
 import (
 	"log"
 	"os"
+	"runtime"
 	"testing"
 
 	"github.com/wenerme/go-magic"
@@ -24,7 +25,11 @@ func TestFile(t *testing.T) {
 	assert.NoError(t, mgc.Error())
 
 	mgc.SetFlags(magic.MAGIC_MIME | magic.MAGIC_MIME_ENCODING)
-	assert.Equal(t, "application/x-mach-binary; charset=binary", mgc.File(os.Args[0]))
+	if runtime.GOOS == "darwin" {
+		assert.Equal(t, "application/x-mach-binary; charset=binary", mgc.File(os.Args[0]))
+	} else {
+		assert.Equal(t, "application/x-executable; charset=binary", mgc.File(os.Args[0]))
+	}
 	assert.Equal(t, 0, mgc.Errno())
 	assert.NoError(t, mgc.Error())
 
